@@ -1,21 +1,23 @@
 <!DOCTYPE html><html><head><meta charset="utf-8">
 <title>Reversi</title>
-<link rel="stylesheet" type="text/css" href="base.css" />
-<script src="game.js"></script>
-<script src="player.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/base.css" />
+<script src="Cell.js"></script>
+<script src="Game.js"></script>
+<script src="View.js"></script>
+<script src="Player.js"></script>
+<script src="CPU.js"></script>
+<script>
+var game = null; // global
+
+window.onload = function boot() {
+    game = new Game();
+    game.play(new Player("a"), new Player("b"));
+};
+</script>
 </head>
 <body>
 <div>
   <table>
-    <tr><td>Score:</td>
-      <td id="blackScore"></td>
-      <td id="whiteScore"></td>
-      <td id="turn" rowspan="3"></td>
-      <td rowspan="3">
-        <input type="button" value="Game Start" onclick="game.init()" />
-        <input type="button" value="Undo" onclick="game.undo()" />
-      </td>
-    </tr>
     <tr><td>Player:</td>
       <td>
         <select id="player1">
@@ -33,30 +35,29 @@
           <option value="3" style="background-color: cornsilk;">白ヤギさん</option>
         </select>
       </td>
+      <td>
+        <input type="button" value="new Game" onclick="game.play()" />
+        <input type="button" value="Undo" onclick="game.undo()" />
+      </td>
+      <td id="turn" rowspan="2"></td>
     </tr>
-    <tr><td>Option:</td>
-      <td>size<br />
-        <select id="cellSize">
-          <option value="6">6 x 6</option>
-          <option value="7">7 x 7</option>
-          <option value="8" selected="selected">8 x 8</option>
-          <option value="9">9 x 9</option>
-          <option value="10">10 x 10</option>
-        </select>
-      </td>
-      <td>hint<br />
-        <select id="hintMode">
-          <option value="0">なし</option>
-          <option value="1" selected="selected">色</option>
-          <option value="2">得点</option>
-          <option value="3">色 + 得点</option>
-        </select>
-      </td>
+    <tr><td>Score:</td>
+      <td id="blackScore"></td>
+      <td id="whiteScore"></td>
     </tr>
   </table>
 </div>
-<div id="board">
-  <table id="layer0"></table>
+<div id="container">
+  <table id="board">
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+  </table>
 </div>
 </body>
 </html>

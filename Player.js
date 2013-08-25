@@ -49,6 +49,8 @@ function logic(param,      // @arg Object: { color, cell, turn }
     callback(position);
 }
 
+
+
 // --- export ----------------------------------------------
 if (_NODE_JS) {
     module.exports = Player;

@@ -1,18 +1,56 @@
 <!DOCTYPE html><html><head><meta charset="utf-8">
 <title>Reversi</title>
 <link rel="stylesheet" type="text/css" href="assets/base.css" />
+<script src="Utility.js"></script>
 <script src="Cell.js"></script>
 <script src="Game.js"></script>
 <script src="View.js"></script>
 <script src="Player.js"></script>
-<script src="CPU.js"></script>
+<script src="cpu/BaseLogic.js"></script>
+<script src="cpu/CPULv1.js"></script>
+<script src="cpu/CPULv2.js"></script>
+<script src="cpu/CPULv3.js"></script>
+<!-- update here -->
+<script src="cpu/Logic1.js"></script>
+<script src="cpu/Logic2.js"></script>
+<script src="cpu/Logic3.js"></script>
+<script src="cpu/Logic4.js"></script>
+<script src="cpu/Logic5.js"></script>
+<script src="cpu/Logic6.js"></script>
+<script src="cpu/Logic7.js"></script>
+<script src="cpu/Logic8.js"></script>
+<script src="cpu/Logic9.js"></script>
+<script src="cpu/Logic10.js"></script>
+<script src="cpu/Logic11.js"></script>
+<script src="cpu/Logic12.js"></script>
+<script src="cpu/Logic13.js"></script>
+<script src="cpu/Logic14.js"></script>
+<script src="cpu/Logic15.js"></script>
+<script src="cpu/Logic16.js"></script>
+
 <script>
 var game = null; // global
 
-window.onload = function boot() {
+window.onload = function() {
+    // Utility.loadUserLogic();
     game = new Game();
-    game.play(new Player("a"), new Player("b"));
 };
+
+function newGame() {
+    // セレクトボックスで選択されたモジュール(CPUロジック)をロードする
+    var select1 = document.querySelector("select#Player1");
+    var select2 = document.querySelector("select#Player2");
+    var Logic1 = select1.options[select1.selectedIndex].value;
+    var Logic2 = select2.options[select2.selectedIndex].value;
+
+    // モジュールが読み込まれていなければエラーを表示する
+    if (Logic1 in window && Logic2 in window) {
+        game.play(new window[Logic1](Logic1),
+                  new window[Logic2](Logic2));
+    } else {
+        alert("Module not found.");
+    }
+}
 </script>
 </head>
 <body>
@@ -20,23 +58,55 @@ window.onload = function boot() {
   <table>
     <tr><td>Player:</td>
       <td>
-        <select id="player1">
-          <option value="0" selected="selected">プレイヤー1</option>
-          <option value="1" style="color: white; background-color: #333;">アリさん</option>
-          <option value="2" style="color: white; background-color: #595b4a;">黒ブタさん</option>
-          <option value="3" style="color: white; background-color: #747383;">黒ヤギさん</option>
+        <select id="Player1">
+          <option value="Player" selected="selected">Player1(Human)</option>
+          <option value="CPULv1">CPULv1</option>
+          <option value="CPULv2">CPULv2</option>
+          <option value="CPULv3">CPULv3</option>
+          <option value="Logic1">Logic1</option>
+          <option value="Logic2">Logic2</option>
+          <option value="Logic3">Logic3</option>
+          <option value="Logic4">Logic4</option>
+          <option value="Logic5">Logic5</option>
+          <option value="Logic6">Logic6</option>
+          <option value="Logic7">Logic7</option>
+          <option value="Logic8">Logic8</option>
+          <option value="Logic9">Logic9</option>
+          <option value="Logic10">Logic10</option>
+          <option value="Logic11">Logic11</option>
+          <option value="Logic12">Logic12</option>
+          <option value="Logic13">Logic13</option>
+          <option value="Logic14">Logic14</option>
+          <option value="Logic15">Logic15</option>
+          <option value="Logic16">Logic16</option>
         </select>
       </td>
       <td>
-        <select id="player2">
-          <option value="0" selected="selected">プレイヤー2</option>
-          <option value="1" style="background-color: ivory;">白アリさん</option>
-          <option value="2" style="background-color: antiquewhite;">白ブタさん</option>
-          <option value="3" style="background-color: cornsilk;">白ヤギさん</option>
+        <select id="Player2">
+          <option value="Player" selected="selected">Player2(Human)</option>
+          <option value="CPULv1">CPULv1</option>
+          <option value="CPULv2">CPULv2</option>
+          <option value="CPULv3">CPULv3</option>
+          <option value="Logic1">Logic1</option>
+          <option value="Logic2">Logic2</option>
+          <option value="Logic3">Logic3</option>
+          <option value="Logic4">Logic4</option>
+          <option value="Logic5">Logic5</option>
+          <option value="Logic6">Logic6</option>
+          <option value="Logic7">Logic7</option>
+          <option value="Logic8">Logic8</option>
+          <option value="Logic9">Logic9</option>
+          <option value="Logic10">Logic10</option>
+          <option value="Logic11">Logic11</option>
+          <option value="Logic12">Logic12</option>
+          <option value="Logic13">Logic13</option>
+          <option value="Logic14">Logic14</option>
+          <option value="Logic15">Logic15</option>
+          <option value="Logic16">Logic16</option>
         </select>
       </td>
       <td>
-        <input type="button" value="new Game" onclick="game.play()" />
+        <input type="button" value="new Game" onclick="newGame()" />
         <input type="button" value="Undo" onclick="game.undo()" />
       </td>
       <td id="turn" rowspan="2"></td>

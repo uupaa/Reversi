@@ -10,9 +10,9 @@ var _NODE_JS = !!global.global;
 // --- local variable --------------------------------------
 
 // --- interface -------------------------------------------
-function Cell() {
+function Cell(cell) { // @arg CellValueArray(= null):
     this._undo = { cell: [], color: [] };
-    this._cell = [
+    this._cell = cell || [
             0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,
@@ -38,11 +38,12 @@ Cell._DIRECTION_BIAS = [
     { x:-1, y: 0 }, // S
     { x:-1, y:-1 }  // NW
 ];
-Cell.prototype.move  = move;    // Cell#move(color:CellValue, x:Integer, y:Integer):void
-Cell.prototype.undo  = undo;    // Cell#undo():CellValue
-Cell.prototype.cell  = cell;    // Cell#cell():CellValueArray
-Cell.prototype.hint  = hint;    // Cell#hint(color:CellValue):ScoreIntegerArray
-Cell.prototype.score = score;   // Cell#score():Array
+Cell.prototype.move  = move;    // Cell#move(color:CellValue, x:Integer, y:Integer):this // 石を置く
+Cell.prototype.undo  = undo;    // Cell#undo():CellValue // 一手戻す
+Cell.prototype.turn  = turn;    // Cell#turn():CellValue // 現在のターン数を返す
+Cell.prototype.cell  = cell;    // Cell#cell():CellValueArray // 盤面を配列で返す
+Cell.prototype.hint  = hint;    // Cell#hint(color:CellValue):ScoreIntegerArray // 獲得可能な得点の見積もりを配列で返す
+Cell.prototype.score = score;   // Cell#score():Array // 黒と白の得点を { black, white } のオブジェクトで返す
 
 // --- implement -------------------------------------------
 function move(color, // @arg CellValue: Cell.BLACK or Cell.WHITE
@@ -61,6 +62,7 @@ function move(color, // @arg CellValue: Cell.BLACK or Cell.WHITE
             _reverse(that, color, x, y, dir);
         }
     }
+    return this;
 }
 
 function undo() { // @ret CellValue: Cell.BLACK or Cell.WHITE
@@ -69,6 +71,10 @@ function undo() { // @ret CellValue: Cell.BLACK or Cell.WHITE
         return this._undo.color.pop();
     }
     return Cell.BLACK;
+}
+
+function turn() { // @ret Integer: turn count
+    return this._undo.cell.length;
 }
 
 function _reverse(that, color, x, y, direction) {

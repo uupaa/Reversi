@@ -10,12 +10,12 @@ var _NODE_JS = !!global.global;
 // --- local variable --------------------------------------
 
 // --- interface -------------------------------------------
-function Logic1(name) { // @arg String: player name
+function Logic9(name) { // @arg String: player name
     this._name = name;
     this._human = false;
 }
-Logic1.prototype.__proto__ = Player.prototype;
-Logic1.prototype.logic = logic; // [override] #logic(color:CellValue, cell:CellValueArray, callback):Boolean
+Logic9.prototype.__proto__ = Player.prototype;
+Logic9.prototype.logic = logic; // [override] #logic(color:CellValue, cell:CellValueArray, callback):Boolean
 
 // --- implement -------------------------------------------
 function logic(param,      // @arg Object: { color, cell, turn }
@@ -43,9 +43,9 @@ function logic(param,      // @arg Object: { color, cell, turn }
 
 // --- export ----------------------------------------------
 if (_NODE_JS) {
-    module.exports = Logic1;
+    module.exports = Logic9;
 }
-global.Logic1 = Logic1;
+global.Logic9 = Logic9;
 
 })(this.self || global);
 
